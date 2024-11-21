@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 // COMPONENT
 import RootContainer from "@/components/container/RootContainer";
+import GlobalProvider from "@/components/providers/GlobalProvider";
+import AxiosProvider from "@/components/providers/AxiosProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +28,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <RootContainer>{children}</RootContainer>
+        <AxiosProvider>
+          <GlobalProvider>
+            <RootContainer>{children}</RootContainer>
+          </GlobalProvider>
+        </AxiosProvider>
       </body>
     </html>
   );

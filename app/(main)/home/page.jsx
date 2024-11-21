@@ -1,6 +1,22 @@
-import Image from "next/image";
+// SERVICE
+import KorPetTourService from "@/service/KorPetTourService ";
 
-export default function Home() {
+// 최초 데이터
+async function getInitialData() {
+  try {
+    const { data } = await KorPetTourService.getAreaBasedList({
+      numOfRows: 50,
+    });
+    return data;
+  } catch (e) {
+    console.log("e", e);
+  }
+}
+
+export default async function Home() {
+  const initialData = await getInitialData(); // 서버에서 데이터 가져오기
+  console.log("initialData", initialData);
+
   return (
     <div>
       <div>Home Page1111</div>
