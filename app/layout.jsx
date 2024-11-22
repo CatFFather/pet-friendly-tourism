@@ -2,8 +2,8 @@ import localFont from 'next/font/local';
 import './globals.css';
 // COMPONENT
 import RootContainer from '@/components/container/RootContainer';
-import { GlobalStoreProvider } from '@/components/providers/GlobalProvider';
-import AxiosProvider from '@/components/providers/AxiosProvider';
+import { GlobalStoreProvider } from '@/providers/GlobalProvider';
+import AxiosProvider from '@/providers/AxiosProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
