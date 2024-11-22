@@ -1,5 +1,7 @@
 // SERVICE
-import KorPetTourService from "@/service/KorPetTourService ";
+import KorPetTourService from '@/service/KorPetTourService ';
+// COMPONENT
+import HomeList from '@/app/(main)/home/(list)/HomeList';
 
 // 최초 데이터
 async function getInitialData() {
@@ -9,18 +11,19 @@ async function getInitialData() {
     });
     return data;
   } catch (e) {
-    console.log("e", e);
+    console.log('e', e);
   }
 }
 
 export default async function Home() {
   const initialData = await getInitialData(); // 서버에서 데이터 가져오기
-  console.log("initialData", initialData);
+  console.log('initialData', initialData);
 
   return (
     <div>
       <div>Home Page1111</div>
       <div>Home Page1111</div>
+      <HomeList initialData={initialData} />
     </div>
   );
 }
