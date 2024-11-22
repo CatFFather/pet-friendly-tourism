@@ -1,11 +1,11 @@
-"use client";
-import { usePathname } from "next/navigation";
+'use client';
+import { usePathname } from 'next/navigation';
 // ICON
 import {
   HomeIcon,
   MagnifyingGlassIcon,
   UserIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 
 /**
  * 네비 아이콘
@@ -16,19 +16,18 @@ import {
 export default function NavigationIcon({ nav }) {
   const pathname = usePathname();
   const iconClassName = `h-6 w-6`;
-  const textClassName = `text-[${
-    nav.href == pathname ? "#4ED1AD" : "#B6BDBE"
-  }]`;
+  const textClassName =
+    nav.href == pathname ? 'text-[#4ED1AD]' : 'text-[#B6BDBE]';
 
   return (
     <>
-      {nav.href == "/home" && (
+      {nav.href == '/home' && (
         <HomeIcon className={`${iconClassName} ${textClassName}`} />
       )}
-      {nav.href == "/search" && (
+      {nav.href == '/search' && (
         <MagnifyingGlassIcon className={`${iconClassName} ${textClassName}`} />
       )}
-      {nav.href == "/login" && (
+      {nav.href == '/login' && (
         <UserIcon className={`${iconClassName} ${textClassName}`} />
       )}
       <span className={textClassName}>{nav.label}</span>
