@@ -1,14 +1,32 @@
-"use client";
+'use client';
+
+import { createContext, useRef, useContext } from 'react';
+import { useStore } from 'zustand';
+
 // STORE
-import globalStore from "@/stores/globalStore";
-import { useEffect } from "react";
+import { createGlobalStore, initGlobalStore } from '@/stores/globalStore';
 
-// 글로벌로 관리하는 데이터 제공
-export default function GlobalProvider({ children }) {
-  const { getPetTourCategoryCodeList } = globalStore();
-  useEffect(() => {
-    getPetTourCategoryCodeList();
-  }, []);
+export const GlobalStoreContext = createContext(undefined);
 
-  return <>{children}</>;
-}
+export const GlobalStoreProvider = ({ children }) => {
+  const storeRef = useRef();
+  if (!storeRef.current) {
+    storeRef.current = createGlobalStore(initGlobalStore());
+  }
+
+  return (
+    <GlobalStoreContext.Provider value={storeRef.current}>
+      {children}
+    </GlobalStoreContext.Provider>
+  );
+};
+
+export const useGlobalStore = (selector) => {
+  const counterStoreContext = useContext(GlobalStoreContext);
+
+  if (!counterStoreContext) {
+    throw new Error(`useCounterStore must be used within CounterStoreProvider`);
+  }
+
+  return useStore(counterStoreContext, selector);
+};

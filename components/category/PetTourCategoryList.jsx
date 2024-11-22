@@ -1,10 +1,11 @@
 'use client';
 // STORE
-import globalStore from '@/stores/globalStore';
+// import globalStore from '@/stores/globalStore';
+import { useGlobalStore } from '@/components/providers/GlobalProvider';
 import { useEffect } from 'react';
 export default function PetTourCategoryList() {
-  const { petTourCategoryCodes } = globalStore();
-
+  const { petTourCategoryCodes } = useGlobalStore((state) => state);
+  console.log('petTourCategoryCodes', petTourCategoryCodes);
   return (
     <ul className="px-3 overflow-x-auto whitespace-nowrap flex">
       {petTourCategoryCodes?.map((code) => {
