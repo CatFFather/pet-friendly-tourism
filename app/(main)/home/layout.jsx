@@ -22,7 +22,7 @@ export default async function HomeLayout({ children }) {
 
   return (
     <div className="relative">
-      <div className="sticky top-0 bg-[#FFFFFF]">
+      <div className="sticky top-0 bg-[#FFFFFF] z-50">
         <PetTourCategoryList categoryCodeList={categoryCodeList} />
       </div>
       {children}

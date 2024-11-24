@@ -20,10 +20,8 @@ export default async function Home() {
   console.log('initialData', initialData);
 
   return (
-    <div>
-      <div>Home Page1111</div>
-      <div>Home Page1111</div>
+    <>
       <HomeList initialData={initialData} />
-    </div>
+    </>
   );
 }

@@ -11,20 +11,28 @@ export default function HomeList({ initialData }) {
   useEffect(() => {
     console.log('list', list);
   }, [list]);
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-wrap gap-2 pt-5 pb-10 px-4">
       {list.map((item) => {
         return (
-          <div key={item?.contentid} className="flex flex-col gap-2">
-            <Image
-              // fill
-              src={item?.firstimage}
-              width={500}
-              height={500}
-              alt={item?.title}
-              style={{ objectFit: 'contain' }}
-            />
-            <div>{item?.title}</div>
+          <div
+            key={item?.contentid}
+            className="flex flex-col gap-2 basis-[calc(50%-calc(0.5rem/2))]"
+          >
+            <div className="relative after:content-[''] after:pb-[90%] after:block">
+              <Image
+                fill
+                className="object-cover rounded-lg box-border border border-[#F3F6F6]"
+                src={
+                  item?.firstimage ||
+                  item?.firstimage2 ||
+                  '/images/DefaultImage.webp'
+                }
+                alt={item?.title}
+              />
+            </div>
+            <div className="">{item?.title}</div>
           </div>
         );
       })}
