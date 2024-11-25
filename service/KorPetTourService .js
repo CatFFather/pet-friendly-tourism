@@ -1,29 +1,86 @@
-import { korPetTourServiceInstance as axios } from "@/service/axios";
-import qs from "qs";
+import { korPetTourServiceInstance as axios } from '@/service/axios';
+import qs from 'qs';
 
 export default {
-  // 서비스분류코드조회
+  /**
+   * 서비스분류코드조회
+   * 반려동물 동반여행지의 각 관광타입(관광지, 숙박 등)에 해당하는 서비스 분류코드를 대,중,소분류로 조회하는 기능입니다.
+   * @param {*} params
+   * @returns
+   */
   getCategoryCodeList: (params) => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/categoryCode?${qs.stringify(params)}`,
     };
     return axios(requestOptions);
   },
 
-  // 지역기반 관광정보조회
+  /**
+   * 지역기반 관광정보조회
+   * 반려동물 동반여행지의 지역 및 시군구를 기반으로 관광정보 목록을 조회하는 기능입니다. 파라미터에 따라 제목순, 수정일순(최신순), 등록일순 정렬검색을 제공합니다.
+   * @param {*} params
+   * @returns
+   */
   getAreaBasedList: (params) => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/areaBasedList?${qs.stringify(params)}`,
     };
     return axios(requestOptions);
   },
-  // 상세
-  getTransactionById: (id) => {
+  /**
+   * 반려동물 동반여행 조회
+   * 반려동물 동반여행 정보 목록을 제공합니다.
+   * @param {*} params
+   * @returns
+   */
+  getDetailPetTour: (params) => {
     const requestOptions = {
-      method: "GET",
-      url: `/api/dues/v1/transaction/${id}`,
+      method: 'GET',
+      url: `/detailPetTour/?${qs.stringify(params)}`,
+    };
+    return axios(requestOptions);
+  },
+
+  /**
+   * 반복정보조회
+   * 반려동물 동반여행지의 관광타입별 반복정보를 조회하는 기능입니다. “숙박”은 객실정보를 제공합니다. “숙박”를 제외한 나머지 타입은 다양한 정보를 반복적인 형태로 제공합니다.
+   * @param {*} params
+   * @returns
+   */
+  getDetailInfo: (params) => {
+    const requestOptions = {
+      method: 'GET',
+      url: `/detailInfo/?${qs.stringify(params)}`,
+    };
+    return axios(requestOptions);
+  },
+
+  /**
+   * 공통정보조회
+   * 반려동물 동반여행지의 타입별 공통정보(제목, 연락처, 주소, 좌표, 개요정보 등)를 조회하는 기능입니다.
+   * @param {*} params
+   * @returns
+   */
+  getDetailCommon: (params) => {
+    const requestOptions = {
+      method: 'GET',
+      url: `/detailCommon/?${qs.stringify(params)}`,
+    };
+    return axios(requestOptions);
+  },
+
+  /**
+   * 소개정보조회
+   * 반려동물 동반여행지의 관광타입별 소개정보(휴무일, 개장시간, 주차시설 등)를 조회하는 기능입니다. 각 타입마다 응답 항목이 다르게 제공됩니다.
+   * @param {*} params
+   * @returns
+   */
+  getDetailIntro: (params) => {
+    const requestOptions = {
+      method: 'GET',
+      url: `/detailIntro/?${qs.stringify(params)}`,
     };
     return axios(requestOptions);
   },
