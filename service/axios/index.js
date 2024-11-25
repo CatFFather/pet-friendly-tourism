@@ -1,13 +1,29 @@
-import axios from "axios";
+import axios from 'axios';
 // axios instance 정의
-const korPetTourServiceInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_KOR_PET_TOUR_SERVICE_API_URL,
-  headers: { "Content-Type": "application/json" },
+const localInstance = axios.create({
+  // baseURL: '',
+  headers: {
+    // 'Content-Type': 'application/json',
+    // 'Access-Control-Allow-Origin': '*',
+  },
   params: {
     serviceKey: process.env.NEXT_PUBLIC_KOR_PET_TOUR_SERVICE_API_KEY,
-    MobileApp: "test-app", // TODO 나중에 변경
-    MobileOS: "WIN", // TODO 모바일, 웹 구분 필요
-    _type: "json",
+    MobileApp: 'test-app', // TODO 나중에 변경
+    MobileOS: 'WIN', // TODO 모바일, 웹 구분 필요
+    _type: 'json',
+  },
+});
+
+const korPetTourServiceInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_KOR_PET_TOUR_SERVICE_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  params: {
+    serviceKey: process.env.NEXT_PUBLIC_KOR_PET_TOUR_SERVICE_API_KEY,
+    MobileApp: 'test-app', // TODO 나중에 변경
+    MobileOS: 'WIN', // TODO 모바일, 웹 구분 필요
+    _type: 'json',
   },
 });
 
@@ -54,4 +70,4 @@ const korPetTourServiceInstance = axios.create({
 //   }
 // );
 
-export { korPetTourServiceInstance };
+export { localInstance, korPetTourServiceInstance };
