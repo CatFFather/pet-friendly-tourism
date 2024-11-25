@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 import useObserver from '@/hooks/useObserver';
@@ -51,12 +52,12 @@ export default function HomeList({ initialData }) {
       .catch((e) => console.log('e', e))
       .finally(() => setListLoading(false));
   }
-
   return (
     <div className="flex flex-wrap gap-2 pt-5 pb-10 px-4">
       {list.map((item) => {
         return (
-          <div
+          <Link
+            href={`/home/${item?.contenttypeid}/${item?.contentid}`}
             key={item?.contentid}
             className="flex flex-col gap-2 basis-[calc(50%-calc(0.5rem/2))]"
           >
@@ -73,7 +74,7 @@ export default function HomeList({ initialData }) {
               />
             </div>
             <div className="">{item?.title}</div>
-          </div>
+          </Link>
         );
       })}
       {!listLoading && list?.length < pagination?.totalCount && (
