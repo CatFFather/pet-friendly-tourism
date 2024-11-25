@@ -1,4 +1,7 @@
-import { korPetTourServiceInstance as axios } from '@/service/axios';
+import {
+  korPetTourServiceInstance as axios,
+  localInstance,
+} from '@/service/axios';
 import qs from 'qs';
 
 export default {
@@ -83,5 +86,14 @@ export default {
       url: `/detailIntro/?${qs.stringify(params)}`,
     };
     return axios(requestOptions);
+  },
+
+  // 로컬 테스트 api 추가
+  getDetailData: (params) => {
+    const requestOptions = {
+      method: 'GET',
+      url: `/api/home/?${qs.stringify(params)}`,
+    };
+    return localInstance(requestOptions);
   },
 };
