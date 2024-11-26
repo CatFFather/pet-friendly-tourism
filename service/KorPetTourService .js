@@ -3,6 +3,41 @@ import {
   localInstance,
 } from '@/service/axios';
 import qs from 'qs';
+// UTIL
+import httpClient from '@/utils/httpClient';
+
+const defaultParams = {
+  serviceKey: process.env.NEXT_PUBLIC_KOR_PET_TOUR_SERVICE_API_KEY,
+  MobileApp: 'test-app', // TODO 나중에 변경
+  MobileOS: 'WIN', // TODO 모바일, 웹 구분 필요
+  _type: 'json',
+};
+
+export const request = httpClient({
+  baseUrl: process.env.NEXT_PUBLIC_KOR_PET_TOUR_SERVICE_API_URL,
+  headers: { 'Content-Type': 'application/json' },
+  // credentials: "include",
+  // cache: "no-store",
+  interceptors: {
+    request(_, init) {
+      // TODO request interceptors
+      // init.headers = initializeHeaders(init.headers);
+      return init;
+    },
+    async response(response) {
+      // TODO response interceptors
+      // if (response.status === 401) {
+      //   redirect('/login');
+      // }
+      try {
+        return await response.json();
+      } catch {
+        console.error('Failed to parse response body as JSON.');
+        return null;
+      }
+    },
+  },
+});
 
 export default {
   /**
@@ -39,11 +74,10 @@ export default {
    * @returns
    */
   getDetailPetTour: (params) => {
-    const requestOptions = {
-      method: 'GET',
-      url: `/detailPetTour/?${qs.stringify(params)}`,
-    };
-    return axios(requestOptions);
+    return request(
+      `/detailPetTour?${qs.stringify({ ...defaultParams, ...params })}`,
+      { method: 'GET' },
+    );
   },
 
   /**
@@ -53,11 +87,10 @@ export default {
    * @returns
    */
   getDetailInfo: (params) => {
-    const requestOptions = {
-      method: 'GET',
-      url: `/detailInfo/?${qs.stringify(params)}`,
-    };
-    return axios(requestOptions);
+    return request(
+      `/detailInfo?${qs.stringify({ ...defaultParams, ...params })}`,
+      { method: 'GET' },
+    );
   },
 
   /**
@@ -67,11 +100,10 @@ export default {
    * @returns
    */
   getDetailCommon: (params) => {
-    const requestOptions = {
-      method: 'GET',
-      url: `/detailCommon/?${qs.stringify(params)}`,
-    };
-    return axios(requestOptions);
+    return request(
+      `/detailCommon?${qs.stringify({ ...defaultParams, ...params })}`,
+      { method: 'GET' },
+    );
   },
 
   /**
@@ -81,11 +113,10 @@ export default {
    * @returns
    */
   getDetailIntro: (params) => {
-    const requestOptions = {
-      method: 'GET',
-      url: `/detailIntro/?${qs.stringify(params)}`,
-    };
-    return axios(requestOptions);
+    return request(
+      `/detailIntro?${qs.stringify({ ...defaultParams, ...params })}`,
+      { method: 'GET' },
+    );
   },
 
   // 로컬 테스트 api 추가
