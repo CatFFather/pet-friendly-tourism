@@ -70,6 +70,7 @@ export default function HomeList({ initialData }) {
                   item?.firstimage2 ||
                   '/images/DefaultImage.webp'
                 }
+                sizes="100%" // sizes를 지정해달라고 해서 임시로 100%로 해놨는데 이거 무슨값을 넣어도 바뀌지않는데 왜그럴까?
                 alt={item?.title}
               />
             </div>
