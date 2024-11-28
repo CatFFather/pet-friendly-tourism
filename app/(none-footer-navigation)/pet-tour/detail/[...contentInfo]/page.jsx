@@ -38,7 +38,7 @@ async function getDetailItems(contentTypeId, contentId) {
   return detailItems;
 }
 
-export default async function ContentPage({ params }) {
+export default async function PetTourDetailPage({ params }) {
   const { contentInfo } = await params;
   const contentTypeId = contentInfo?.[0];
   const contentId = contentInfo?.[1];
@@ -47,7 +47,6 @@ export default async function ContentPage({ params }) {
   console.log('detailItems', detailItems);
   return (
     <div>
-      <div>{common.title}</div>
       <div className="relative after:content-[''] after:pb-[90%] after:block">
         <Image
           fill
@@ -60,6 +59,7 @@ export default async function ContentPage({ params }) {
           alt={common?.title}
         />
       </div>
+      <div>{common.title}</div>
       <div>{common.overview}</div>
     </div>
   );
