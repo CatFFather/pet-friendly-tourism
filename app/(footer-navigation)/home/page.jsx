@@ -1,7 +1,7 @@
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 // COMPONENT
-import HomeList from '@/app/(main)/home/(list)/HomeList';
+import HomeList from '@/app/(footer-navigation)/home/(list)/HomeList';
 
 // 최초 데이터
 async function getInitialData() {

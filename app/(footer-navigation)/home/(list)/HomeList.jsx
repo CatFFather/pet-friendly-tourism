@@ -57,7 +57,7 @@ export default function HomeList({ initialData }) {
       {list.map((item) => {
         return (
           <Link
-            href={`/home/${item?.contenttypeid}/${item?.contentid}`}
+            href={`/pet-tour/detail/${item?.contenttypeid}/${item?.contentid}`}
             key={item?.contentid}
             className="flex flex-col gap-2 basis-[calc(50%-calc(0.5rem/2))]"
           >

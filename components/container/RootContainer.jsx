@@ -7,7 +7,9 @@ export default function RootContainer({ children }) {
         <div>검색 input</div>
       </div>
       {/* 우측화면 실제 모바일 화면 */}
-      {children}
+      <div className="min-h-screen w-[430px] relative border-x border-[#E1E1E1] border-solid box-content">
+        {children}
+      </div>
     </div>
   );
 }
