@@ -58,7 +58,7 @@ export default async function PetTourDetailLayout({ params, children }) {
   //   },
   // );
   // console.log('childrenWithTabs', childrenWithTabs);
-  const tilte = '개떼놀이터 인천점';
+  const tilte = '타이틀 고민중';
 
   return <TopBackButtonLayout tilte={tilte}>{children}</TopBackButtonLayout>;
 }

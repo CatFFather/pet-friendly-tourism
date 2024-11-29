@@ -119,6 +119,19 @@ export default {
     );
   },
 
+  /**
+   * 이미지정보조회
+   * 반려동물 동반여행지의 각 관광타입(관광지, 숙박 등)에 해당하는 이미지URL 목록을 조회하는 기능입니다.
+   * @param {*} params
+   * @returns
+   */
+  getDetailImage: (params) => {
+    return request(
+      `/detailImage?${qs.stringify({ ...defaultParams, ...params })}`,
+      { method: 'GET' },
+    );
+  },
+
   // 로컬 테스트 api 추가
   getDetailData: (params) => {
     const requestOptions = {
