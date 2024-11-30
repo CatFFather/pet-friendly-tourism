@@ -4,6 +4,12 @@ import Image from 'next/image';
 import { PhoneIcon, MapIcon } from '@heroicons/react/24/outline';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
+// UTIL
+import {
+  formatCommaNumber,
+  introCategorizedFields,
+  categories,
+} from '@/utils/format';
 
 const sectionClassName =
   'flex flex-col gap-3 px-4 py-5 border-b-8 border-[#F3F6F6] text-sm';
@@ -28,10 +34,17 @@ async function getDetailItems(contentTypeId, contentId) {
         overviewYN: 'Y',
       }),
     ]);
+  const intro = detailIntro?.response?.body?.items?.item?.[0];
+  console.log('intro', intro);
+  const newIntroData = introCategorizedFields?.[contentTypeId].map((column) => {
+    const value = intro[column?.key];
+    return { ...column, value };
+  });
+
   const detailItems = {
     petTour: detailPetTour?.response?.body?.items?.item?.[0],
     info: detailInfo?.response?.body?.items?.item,
-    intro: detailIntro?.response?.body?.items?.item?.[0],
+    intro: newIntroData,
     images: detailImages?.response?.body?.items?.item,
     common: detailCommon?.response?.body?.items?.item?.[0],
   };
@@ -74,6 +87,13 @@ export default async function PetTourDetailPage({ params }) {
     __html: DOMPurify.sanitize(data),
   });
 
+  function getTitle() {
+    const name = categories?.find(
+      (category) => category?.key == contentTypeId,
+    )?.name;
+    return `${name}정보`;
+  }
+
   return (
     <div>
       <div className="relative after:content-[''] after:pb-[90%] after:block">
@@ -111,7 +131,7 @@ export default async function PetTourDetailPage({ params }) {
         <p className="text-[#83898C]">{common?.overview}</p>
       </div>
       <div className={sectionClassName}>
-        <h2 className={h2ClassName}>동행정보</h2>
+        <h2 className={h2ClassName}>반려동물 동행정보</h2>
         <div className="flex items-center gap-x-3">
           <span className="flex-shrink-0 self-start">동반시 필요사항</span>
           <span className="text-[#83898C]">{petTour?.acmpyNeedMtr || '-'}</span>
@@ -169,9 +189,9 @@ export default async function PetTourDetailPage({ params }) {
           <div className="flex flex-col gap-4">
             {info?.map((item) => {
               return (
-                <div className="flex flex-col rounded-lg p-3 bg-[#FFFFFF] -mx-1">
+                <div className="flex flex-col rounded-lg p-3 bg-[#FFFFFF] -mx-1 gap-3">
                   <div className="flex gap-x-3">
-                    <div className="relative after:content-[''] after:pb-[90%] after:block basis-2/4">
+                    <div className="relative after:content-[''] after:pb-[90%] after:block basis-2/4 flex-shrink-0">
                       <Image
                         fill
                         className="object-cover rounded-lg box-border border border-[#F3F6F6]"
@@ -184,55 +204,78 @@ export default async function PetTourDetailPage({ params }) {
                       <h4 className="text-base font-bold text-[#0E0E0E]">
                         {item?.roomtitle}
                       </h4>
-                      <div>
-                        <h5 className="text-sm font-bold text-[#0E0E0E]">
-                          비수기
-                        </h5>
-                        <div className="flex flex-col">
-                          <div className="flex bg-gray-100 text-gray-800">
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>주중</span>
-                            </div>
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>주말</span>
-                            </div>
+                      <span>
+                        기준 {item?.roombasecount}인 / 최대 {item?.roommaxcount}
+                        인
+                      </span>
+                      {/* TODO 평수(roomsize1), 객실수(roomcount)도 있음 넣을 지 고민  */}
+                      <span>{item?.roomintro}</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <h5 className="text-sm font-bold text-[#0E0E0E] mb-2">
+                        비수기
+                      </h5>
+                      <div className="flex flex-col">
+                        <div className="flex bg-gray-100 text-gray-800">
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>주중</span>
                           </div>
-                          <div className="flex even:bg-gray-50 ">
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>{item?.roomoffseasonminfee1}</span>
-                            </div>
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>{item?.roomoffseasonminfee2}</span>
-                            </div>
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>주말</span>
+                          </div>
+                        </div>
+                        <div className="flex even:bg-gray-50 ">
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>
+                              {formatCommaNumber(
+                                Number(item?.roomoffseasonminfee1),
+                              )}
+                            </span>
+                          </div>
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>
+                              {formatCommaNumber(
+                                Number(item?.roomoffseasonminfee2),
+                              )}
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div>
-                        <h5 className="text-sm font-bold text-[#0E0E0E]">
-                          성수기
-                        </h5>
-                        <div className="flex flex-col">
-                          <div className="flex bg-gray-100 text-gray-800">
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>주중</span>
-                            </div>
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>주말</span>
-                            </div>
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-bold text-[#0E0E0E] mb-2">
+                        성수기
+                      </h5>
+                      <div className="flex flex-col">
+                        <div className="flex bg-gray-100 text-gray-800">
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>주중</span>
                           </div>
-                          <div className="flex even:bg-gray-50 ">
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>{item?.roompeakseasonminfee1}</span>
-                            </div>
-                            <div className="flex-1 text-center border border-gray-300 py-2">
-                              <span>{item?.roompeakseasonminfee2}</span>
-                            </div>
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>주말</span>
+                          </div>
+                        </div>
+                        <div className="flex even:bg-gray-50 ">
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>
+                              {formatCommaNumber(
+                                Number(item?.roompeakseasonminfee1),
+                              )}
+                            </span>
+                          </div>
+                          <div className="flex-1 text-center border border-gray-300 py-2">
+                            <span>
+                              {formatCommaNumber(
+                                Number(item?.roompeakseasonminfee2),
+                              )}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div>객실 정보 들어갈자리 인데 가격을 여기에 놓을까 고민</div>
                 </div>
               );
             })}
@@ -259,6 +302,17 @@ export default async function PetTourDetailPage({ params }) {
           })}
         </div>
       )}
+      <div className={sectionClassName}>
+        <h2 className={h2ClassName}>{getTitle()}</h2>
+        {intro?.map((item) => {
+          return (
+            <div className="flex items-center gap-x-3">
+              <span className="flex-shrink-0 self-start">{item?.name}</span>
+              <span className="text-[#83898C]">{item?.value || '-'}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
