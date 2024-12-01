@@ -16,7 +16,7 @@ async function getInitialData() {
 }
 
 export default async function Home() {
-  const initialData = await getInitialData(); // 서버에서 데이터 가져오기
+  const initialData = (await getInitialData()) || []; // 서버에서 데이터 가져오기
   console.log('initialData', initialData);
 
   return (
