@@ -5,44 +5,43 @@ import Link from 'next/link';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 import useObserver from '@/hooks/useObserver';
-export default function HomeList({ initialData }) {
-  const listLoadingRef = useObserver({
-    callback: setNextPage,
-  });
-  const [list, setList] = useState([
-    ...initialData?.response?.body?.items?.item,
-  ]);
-  const [pagination, setPagination] = useState({
-    numOfRows: initialData?.response?.body?.numOfRows,
-    pageNo: initialData?.response?.body?.pageNo,
-    totalCount: initialData?.response?.body?.totalCount,
-  });
-  const [listLoading, setListLoading] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('list', list);
-  // }, [list]);
-  // useEffect(() => {
-  //   console.log('pagination', pagination);
-  // }, [pagination]);
+// 홈 리스트
+export default function HomeList({ initialData, query }) {
+  const listLoadingRef = useObserver({ callback: setNextPage });
+  const [areaBasedList, setAreaBasedList] = useState(null); // 지역기반 관광정보 리스트
+  const [pagination, setPagination] = useState(null); // 페이징 정보
+  const [listLoading, setListLoading] = useState(false); // 리스트 로딩
+
+  useEffect(() => {
+    setAreaBasedList([...(initialData?.response?.body?.items?.item || [])]);
+    setPagination({
+      numOfRows: initialData?.response?.body?.numOfRows,
+      pageNo: initialData?.response?.body?.pageNo,
+      totalCount: initialData?.response?.body?.totalCount,
+    });
+  }, [initialData]);
 
   // 다음 페이지 불러오기
   function setNextPage() {
     if (listLoading) return;
-    if (list?.length >= pagination?.totalCount) return;
-    else getAreaBasedList(pagination.pageNo + 1);
+    if (areaBasedList?.length >= pagination?.totalCount) return;
+    else getAreaBasedList(pagination?.pageNo + 1);
   }
 
   // 지역기반 관광정보조회
   function getAreaBasedList(pageNo) {
     setListLoading(true);
     KorPetTourService.getAreaBasedList({
-      numOfRows: pagination.numOfRows,
+      numOfRows: pagination?.numOfRows,
       pageNo,
+      ...query,
     })
       .then((res) => {
-        // console.log('res', res);
-        setList([...list, ...res?.data.response?.body?.items?.item]);
+        setAreaBasedList([
+          ...areaBasedList,
+          ...res?.data.response?.body?.items?.item,
+        ]);
         setPagination({
           numOfRows: res?.data?.response?.body?.numOfRows,
           pageNo: res?.data?.response?.body?.pageNo,
@@ -54,7 +53,7 @@ export default function HomeList({ initialData }) {
   }
   return (
     <div className="flex flex-wrap gap-2 pt-5 pb-10 px-4">
-      {list.map((item) => {
+      {areaBasedList?.map((item) => {
         return (
           <Link
             href={`/pet-tour/detail/${item?.contenttypeid}/${item?.contentid}`}
@@ -78,7 +77,7 @@ export default function HomeList({ initialData }) {
           </Link>
         );
       })}
-      {!listLoading && list?.length < pagination?.totalCount && (
+      {!listLoading && areaBasedList?.length < pagination?.totalCount && (
         <div ref={listLoadingRef.setRef}>다음 페이지@@@@@@@@@@@</div>
       )}
     </div>

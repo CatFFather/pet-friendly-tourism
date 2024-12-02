@@ -41,7 +41,8 @@ export default function PetTourCategoryList({ categoryCodeList }) {
           return (
             <Link
               key={code?.code}
-              href={{ pathname: pathname, query: { cat1: code?.code } }}
+              href={{ pathname, query: { cat1: code?.code } }}
+              replace
             >
               <li
                 id={code?.code}

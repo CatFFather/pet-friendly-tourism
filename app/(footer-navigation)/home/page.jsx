@@ -4,10 +4,11 @@ import KorPetTourService from '@/service/KorPetTourService ';
 import HomeList from '@/app/(footer-navigation)/home/(list)/HomeList';
 
 // 최초 데이터
-async function getInitialData() {
+async function getInitialData(query) {
   try {
     const { data } = await KorPetTourService.getAreaBasedList({
       numOfRows: 50,
+      ...query,
     });
     return data;
   } catch (e) {
@@ -15,13 +16,9 @@ async function getInitialData() {
   }
 }
 
-export default async function Home() {
-  const initialData = (await getInitialData()) || []; // 서버에서 데이터 가져오기
-  console.log('initialData', initialData);
+export default async function Home({ searchParams }) {
+  const query = await searchParams;
+  const initialData = (await getInitialData(query)) || []; // 서버에서 데이터 가져오기
 
-  return (
-    <>
-      <HomeList initialData={initialData} />
-    </>
-  );
+  return <HomeList initialData={initialData} query={query} />;
 }
