@@ -306,7 +306,7 @@ export default async function PetTourDetailPage({ params }) {
         <h2 className={h2ClassName}>{getTitle()}</h2>
         {intro?.map((item) => {
           return (
-            <div className="flex items-center gap-x-3">
+            <div key={item.key} className="flex items-center gap-x-3">
               <span className="flex-shrink-0 self-start">{item?.name}</span>
               <span className="text-[#83898C]">{item?.value || '-'}</span>
             </div>
