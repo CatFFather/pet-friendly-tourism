@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function PetTourCategoryList({ categoryCodeList }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const cat1 = searchParams.get('cat1');
+  const cat1 = searchParams.get('cat1') || ''; // 예외처리 하여 기본값 '' 로 변경(전체일 때)
   const categoryListRef = useRef(null);
   const markerRef = useRef(null);
 
@@ -41,7 +41,7 @@ export default function PetTourCategoryList({ categoryCodeList }) {
           return (
             <Link
               key={code?.code}
-              href={{ pathname, query: { cat1: code?.code } }}
+              href={{ pathname, query: code?.code && { cat1: code?.code } }}
               replace
             >
               <li

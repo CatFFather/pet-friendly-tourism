@@ -11,7 +11,11 @@ async function getCategoryCodeList() {
     const { data } = await KorPetTourService.getCategoryCodeList({
       numOfRows: 20,
     });
-    return data?.response?.body?.items?.item;
+    const newCategoryCodeList = [
+      { code: '', name: '전체 ' }, // 전체 code는 null 이 아닌 ''로 지정함 --> 만약 code를 null로 하게되면 element의 id가 null이 ''로 들어감 PetTourCategoryList컴포넌트의 li 부분
+      ...(data?.response?.body?.items?.item || []),
+    ];
+    return newCategoryCodeList;
   } catch (e) {
     console.log('e', e);
   }
