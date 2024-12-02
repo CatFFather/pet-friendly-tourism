@@ -34,12 +34,15 @@ export default function PetTourCategoryList({ categoryCodeList }) {
   return (
     <ul
       ref={categoryListRef}
-      className="px-1.5 overflow-x-auto whitespace-nowrap"
+      className="px-1.5 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden border-b"
     >
       <div className="flex items-center gap relative">
         {categoryCodeList?.map((code) => {
           return (
-            <Link key={code?.code} href={`${pathname}?cat1=${code?.code}`}>
+            <Link
+              key={code?.code}
+              href={{ pathname: pathname, query: { cat1: code?.code } }}
+            >
               <li
                 id={code?.code}
                 className="category__code px-2.5 pt-3.5 pb-2.5"
