@@ -18,7 +18,7 @@ async function getCategoryCodeList() {
 }
 
 export default async function HomeLayout({ children }) {
-  const categoryCodeList = await getCategoryCodeList(); // 서버에서 데이터 가져오기
+  const categoryCodeList = (await getCategoryCodeList()) || []; // 서버에서 데이터 가져오기
 
   return (
     <div className="relative">
