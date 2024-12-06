@@ -43,7 +43,7 @@ export default function HomeList({ initialData, query }) {
       .then((res) => {
         setAreaBasedList([
           ...areaBasedList,
-          ...res?.data.response?.body?.items?.item,
+          ...res?.data?.response?.body?.items?.item,
         ]);
         setPagination({
           numOfRows: res?.data?.response?.body?.numOfRows,
