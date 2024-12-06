@@ -1,7 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+
+import { Fragment, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+// COMPONENT
+import ImgSkeleton from '@/components/card/ImgSkeleton';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 import useObserver from '@/hooks/useObserver';
@@ -77,8 +80,16 @@ export default function HomeList({ initialData, query }) {
           </Link>
         );
       })}
+      {listLoading &&
+        [1, 2, 3, 4].map((index) => {
+          return (
+            <Fragment key={index}>
+              <ImgSkeleton description />
+            </Fragment>
+          );
+        })}
       {!listLoading && areaBasedList?.length < pagination?.totalCount && (
-        <div ref={listLoadingRef.setRef}>다음 페이지@@@@@@@@@@@</div>
+        <div ref={listLoadingRef.setRef}></div>
       )}
     </div>
   );
