@@ -1,7 +1,12 @@
 import DOMPurify from 'dompurify';
 import Image from 'next/image';
 // ICON
-import { PhoneIcon, MapIcon } from '@heroicons/react/24/outline';
+import {
+  PhoneIcon,
+  MapIcon,
+  ChevronRightIcon,
+  ChevronLeftIcon,
+} from '@heroicons/react/24/outline';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 // UTIL
@@ -10,6 +15,8 @@ import {
   introCategorizedFields,
   categories,
 } from '@/utils/format';
+// COMPONENT
+import ImgCarousel from '@/components/carousel/ImgCarousel';
 
 const sectionClassName =
   'flex flex-col gap-3 px-4 py-5 border-b-8 border-[#F3F6F6] text-sm';
@@ -94,21 +101,22 @@ export default async function PetTourDetailPage({ params }) {
     return `${name}정보`;
   }
 
+  // 상단 이미지 모음
+  function getImages() {
+    return [
+      common?.firstimage && {
+        url: common?.firstimage,
+        imgName: common?.title,
+      },
+      ...detailItems?.images.map((image) => {
+        return { url: image.originimgurl, imgName: image.imgname };
+      }),
+    ];
+  }
+
   return (
     <div>
-      <div className="relative after:content-[''] after:pb-[90%] after:block">
-        <Image
-          fill
-          className="object-cover rounded-lg box-border border border-[#F3F6F6]"
-          src={
-            common?.firstimage ||
-            common?.firstimage2 ||
-            '/images/DefaultImage.webp'
-          }
-          alt={common?.title || '사진 없음'}
-          sizes="100%"
-        />
-      </div>
+      <ImgCarousel images={getImages()} />
       <div className="px-4 py-5 text-sm">
         <h1 className="text-xl font-bold text-[#0E0E0E] mb-4">
           {common?.title}
