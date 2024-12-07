@@ -103,15 +103,15 @@ export default async function PetTourDetailPage({ params }) {
 
   // 상단 이미지 모음
   function getImages() {
-    return [
-      common?.firstimage && {
-        url: common?.firstimage,
-        imgName: common?.title,
-      },
-      ...detailItems?.images.map((image) => {
-        return { url: image.originimgurl, imgName: image.imgname };
-      }),
-    ];
+    const firstimageImg = {
+      url: common?.firstimage || null,
+      imgName: common?.title,
+    };
+    const images =
+      detailItems?.images?.map((image) => {
+        return { url: image?.originimgurl, imgName: image?.imgname };
+      }) || [];
+    return [firstimageImg, ...images];
   }
 
   return (

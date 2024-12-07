@@ -62,9 +62,12 @@ export default function ImgCarousel({ images }) {
           ref={imgWrapRef}
           className="flex transition-transform translate-x-[-100%]"
         >
-          {totalImages?.map((image) => {
+          {totalImages?.map((image, index) => {
             return (
-              <div className="relative after:content-[''] after:pb-[90%] after:block w-full flex-shrink-0">
+              <div
+                key={index}
+                className="relative after:content-[''] after:pb-[90%] after:block w-full flex-shrink-0"
+              >
                 <Image
                   fill
                   className="object-cover  box-border border border-[#F3F6F6]"
