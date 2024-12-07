@@ -78,18 +78,18 @@ export default function ImgCarousel({ images }) {
         </div>
       </div>
       <button
-        className="absolute bottom-[calc(50%-20px)] bg-[#13221C] opacity-40 rounded-full left-2"
+        className="absolute bottom-[calc(50%-20px)] bg-shadow-color rounded-full left-2"
         onClick={goToPrevious}
       >
         <ChevronLeftIcon className="h-10 w-10 text-[#ffffff]" />
       </button>
       <button
-        className="absolute bottom-[calc(50%-20px)] right-2 bg-[#13221C] opacity-40 rounded-full"
+        className="absolute bottom-[calc(50%-20px)] right-2 bg-shadow-color rounded-full"
         onClick={goToNext}
       >
-        <ChevronRightIcon className="h-10 w-10 text-[#ffffff] opacity-100" />
+        <ChevronRightIcon className="h-10 w-10 text-[#ffffff]" />
       </button>
-      <div className="absolute bottom-2 right-2 bg-[#13221C] opacity-40 rounded-full">
+      <div className="absolute bottom-2 right-2 bg-shadow-color rounded-full">
         <span className="text-xs text-[#ffffff] px-2">
           {currentIndex == 0
             ? 1
