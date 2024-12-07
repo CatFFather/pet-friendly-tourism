@@ -83,12 +83,14 @@ export default function ImgCarousel({ images }) {
       <button
         className="absolute bottom-[calc(50%-20px)] bg-shadow-color rounded-full left-2"
         onClick={goToPrevious}
+        disabled={images?.length == 1}
       >
         <ChevronLeftIcon className="h-10 w-10 text-[#ffffff]" />
       </button>
       <button
         className="absolute bottom-[calc(50%-20px)] right-2 bg-shadow-color rounded-full"
         onClick={goToNext}
+        disabled={images?.length == 1}
       >
         <ChevronRightIcon className="h-10 w-10 text-[#ffffff]" />
       </button>
