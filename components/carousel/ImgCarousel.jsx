@@ -11,7 +11,6 @@ export default function ImgCarousel({ images }) {
     ...(images || []),
     images?.[0],
   ];
-  console.log('totalImages', totalImages);
   const imgWrapRef = useRef(null); // 사진 영역
   const isDragging = useRef(false); // 드래그 중 여부
   const startPosition = useRef(0); // 사진 드래그 시작 x축 시작 포인트
