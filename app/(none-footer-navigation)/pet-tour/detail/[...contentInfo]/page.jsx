@@ -136,7 +136,12 @@ export default async function PetTourDetailPage({ params }) {
       </div>
       <div className={sectionClassName}>
         <h2 className={h2ClassName}>소개</h2>
-        <p className="text-[#83898C]">{common?.overview}</p>
+        <span
+          className="text-[#83898C]"
+          dangerouslySetInnerHTML={{
+            __html: common?.overview || '-',
+          }}
+        />
       </div>
       <div className={sectionClassName}>
         <h2 className={h2ClassName}>반려동물 동행정보</h2>
@@ -302,7 +307,7 @@ export default async function PetTourDetailPage({ params }) {
                   className="text-[#83898C]"
                   // dangerouslySetInnerHTML={sanitizedData(item?.infotext)} // TODO SSR에서 실행 못함 해결방법 필요 --> dynamic  이라고 있는데 찾아보자
                   dangerouslySetInnerHTML={{
-                    __html: item?.infotext || '',
+                    __html: item?.infotext || '-',
                   }}
                 />
               </div>
@@ -316,7 +321,12 @@ export default async function PetTourDetailPage({ params }) {
           return (
             <div key={item.key} className="flex items-center gap-x-3">
               <span className="flex-shrink-0 self-start">{item?.name}</span>
-              <span className="text-[#83898C]">{item?.value || '-'}</span>
+              <span
+                className="text-[#83898C]"
+                dangerouslySetInnerHTML={{
+                  __html: item?.value || '-',
+                }}
+              />
             </div>
           );
         })}
