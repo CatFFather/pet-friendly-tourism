@@ -90,6 +90,7 @@ export default function ImgCarousel({ images }) {
     const movingWidth = `calc(-${
       currentIndex * 100
     }% ${operator} ${absolute}px)`;
+    if (currentIndex == 0 || currentIndex == totalImages?.length - 1) return; // 양쪽 끝 가짜 이미지 일 때는 작동 하지 않게함 --> 이때 움직이게 되면 빈 화면이 노출 됨
     imgWrapRef.current?.style?.setProperty('transition-duration', `0ms`); // duration을 0초로 초기화 후 이동
     imgWrapRef.current?.style?.setProperty(
       'transform',
