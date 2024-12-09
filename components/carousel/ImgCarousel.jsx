@@ -11,6 +11,7 @@ export default function ImgCarousel({ images }) {
     ...(images || []),
     images?.[0],
   ];
+  console.log('totalImages', totalImages);
   const imgWrapRef = useRef(null); // 사진 영역
   const isDragging = useRef(false); // 드래그 중 여부
   const startPosition = useRef(0); // 사진 드래그 시작 x축 시작 포인트
@@ -72,6 +73,7 @@ export default function ImgCarousel({ images }) {
   }
   // 마우스 클릭 했을 때
   function onMouseDown(e) {
+    if (images?.length <= 1) return;
     isDragging.current = true;
     startPosition.current = e.pageX;
     // imgWrapRef에 onMouseMove, onMouseUp를 직접 선언하면 마우스 이벤트가 imgWrapRef의 영역 밖으로 이동했을 때 onMouseUp 이벤트가 발생하지 않게됨
@@ -145,20 +147,25 @@ export default function ImgCarousel({ images }) {
           })}
         </div>
       </div>
-      <button
-        className="absolute bottom-[calc(50%-20px)] bg-shadow-color rounded-full left-2"
-        onClick={goToPrevious}
-        disabled={images?.length == 1}
-      >
-        <ChevronLeftIcon className="h-10 w-10 text-[#ffffff]" />
-      </button>
-      <button
-        className="absolute bottom-[calc(50%-20px)] right-2 bg-shadow-color rounded-full"
-        onClick={goToNext}
-        disabled={images?.length == 1}
-      >
-        <ChevronRightIcon className="h-10 w-10 text-[#ffffff]" />
-      </button>
+      {images?.length > 1 && (
+        <button
+          className="absolute bottom-[calc(50%-20px)] bg-shadow-color rounded-full left-2"
+          onClick={goToPrevious}
+          disabled={images?.length == 1}
+        >
+          <ChevronLeftIcon className="h-10 w-10 text-[#ffffff]" />
+        </button>
+      )}
+      {images?.length > 1 && (
+        <button
+          className="absolute bottom-[calc(50%-20px)] right-2 bg-shadow-color rounded-full"
+          onClick={goToNext}
+          disabled={images?.length == 1}
+        >
+          <ChevronRightIcon className="h-10 w-10 text-[#ffffff]" />
+        </button>
+      )}
+
       <div className="absolute bottom-2 right-2 bg-shadow-color rounded-full">
         <span className="text-xs text-[#ffffff] px-2">
           {currentIndex == 0
