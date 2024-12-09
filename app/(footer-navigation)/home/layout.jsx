@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 // COMPONENT
 import PetTourCategoryList from '@/components/category/PetTourCategoryList';
 // SERVICE
@@ -27,7 +28,9 @@ export default async function HomeLayout({ children }) {
   return (
     <div className="relative">
       <div className="sticky top-0 bg-[#FFFFFF] z-50">
-        <PetTourCategoryList categoryCodeList={categoryCodeList} />
+        <Suspense>
+          <PetTourCategoryList categoryCodeList={categoryCodeList} />
+        </Suspense>
       </div>
       {children}
     </div>
