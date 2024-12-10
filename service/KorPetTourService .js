@@ -132,6 +132,20 @@ export default {
     );
   },
 
+  /**
+   * 키워드조회
+   * 반려동물 동반여행지를 키워드로 검색을 하여 관광타입별 또는 전체 목록을 조회하는 기능입니다. 파라미터에 따라 제목순, 수정일순(최신순), 등록일순 정렬검색을 제공합니다.
+   * @param {*} params
+   * @returns
+   */
+  getSearchKeywordList: (params) => {
+    const requestOptions = {
+      method: 'GET',
+      url: `/searchKeyword?${qs.stringify(params)}`,
+    };
+    return axios(requestOptions);
+  },
+
   // 로컬 테스트 api 추가
   getDetailData: (params) => {
     const requestOptions = {
