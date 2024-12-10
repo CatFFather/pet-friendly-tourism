@@ -76,7 +76,7 @@ export default function HomeList({ initialData, query }) {
                 alt={item?.title}
               />
             </div>
-            <div className="">{item?.title}</div>
+            <div className="line-clamp-2">{item?.title}</div>
           </Link>
         );
       })}
