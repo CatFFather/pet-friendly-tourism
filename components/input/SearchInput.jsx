@@ -11,6 +11,12 @@ export default function SearchInput({
   const inputRef = useRef();
   const resetButtonRef = useRef();
 
+  useEffect(() => {
+    if (inputRef?.current?.value)
+      resetButtonRef?.current?.style?.setProperty('display', 'initial');
+    else resetButtonRef?.current?.style?.setProperty('display', 'none');
+  }, []);
+
   return (
     <div className="relative">
       <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
