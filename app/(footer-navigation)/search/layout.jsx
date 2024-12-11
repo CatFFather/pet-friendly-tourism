@@ -12,7 +12,7 @@ export default function SearchLayout({ children }) {
     <div className="relative">
       <div className="sticky top-0 bg-[#FFFFFF] z-50">
         <div className="px-1.5 py-2">
-          <Form action="">
+          <Form key={keyword} action="">
             <SearchInput name="keyword" defaultValue={keyword} />
           </Form>
         </div>
