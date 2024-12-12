@@ -8,13 +8,42 @@ import ImgSkeleton from '@/components/card/ImgSkeleton';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 import useObserver from '@/hooks/useObserver';
+// UTILE
+import LocalStorage from '@/utils/localStorage';
 
-// 검색 리스트 TODO 최근 검색어 리스트 노출
+// 검색 리스트
 export default function SearchList({ initialData, query }) {
   const listLoadingRef = useObserver({ callback: setNextPage });
-  const [searchList, setSearchList] = useState(null); // 지역기반 관광정보 리스트
+  const [searchList, setSearchList] = useState(null); // 검색 리스트
   const [pagination, setPagination] = useState(null); // 페이징 정보
   const [listLoading, setListLoading] = useState(false); // 리스트 로딩
+
+  const [keywordList, setKeywordList] = useState(null); // 키워드 리스트
+
+  useEffect(() => {
+    console.log('searchList', searchList);
+    console.log('keywordList', keywordList);
+  }, [searchList, keywordList]);
+  useEffect(() => {
+    const recentKeywordList = JSON.parse(
+      LocalStorage?.getItem('recent-keyword-list'),
+    );
+    console.log('recentKeywordList', recentKeywordList);
+    if (!query?.keyword) return setKeywordList(recentKeywordList);
+    console.log('통과@@@@@@@@@@@@');
+    const filterList =
+      recentKeywordList?.filter(
+        (keyword) => keyword?.value != query?.keyword,
+      ) || [];
+    const newKeyword = {
+      key: filterList?.[0]?.key + 1 || 1,
+      value: query?.keyword,
+    };
+    const newList = [newKeyword, ...filterList] || [];
+    LocalStorage?.setItem('recent-keyword-list', JSON.stringify(newList));
+    // 최근 검색어 저장
+    setKeywordList(newList);
+  }, [query?.keyword]);
 
   useEffect(() => {
     setSearchList([...(initialData?.response?.body?.items?.item || [])]);
@@ -57,6 +86,14 @@ export default function SearchList({ initialData, query }) {
   }
   return (
     <div className="flex flex-wrap gap-2 pt-5 pb-10 px-4">
+      {!query?.keyword && (
+        <div>
+          {keywordList &&
+            keywordList.map((keyword) => {
+              return <div key={keyword.key}>{keyword?.value}</div>;
+            })}
+        </div>
+      )}
       {searchList?.map((item) => {
         return (
           <Link
