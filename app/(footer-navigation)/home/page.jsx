@@ -8,6 +8,7 @@ async function getInitialData(query) {
   try {
     const { data } = await KorPetTourService.getAreaBasedList({
       numOfRows: 50,
+      arrange: 'R',
       ...query,
     });
     return data;

@@ -38,6 +38,7 @@ export default function HomeList({ initialData, query }) {
     KorPetTourService.getAreaBasedList({
       numOfRows: pagination?.numOfRows,
       pageNo,
+      arrange: 'R',
       ...query,
     })
       .then((res) => {
