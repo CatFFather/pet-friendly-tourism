@@ -2,7 +2,7 @@ import Image from 'next/image';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 // COMPONENT
-import HomeList from '@/app/(footer-navigation)/home/(list)/HomeList';
+import SearchList from '@/app/(footer-navigation)/search/(list)/SearchList';
 
 // 최초 데이터
 async function getInitialData(query) {
@@ -10,6 +10,7 @@ async function getInitialData(query) {
   try {
     const { data } = await KorPetTourService.getSearchKeywordList({
       numOfRows: 50,
+      arrange: 'R',
       ...query,
     });
     console.log('data', data);
@@ -25,5 +26,5 @@ export default async function Search({ searchParams }) {
 
   const initialData = query?.keyword ? await getInitialData(query) : []; // 서버에서 데이터 가져오기
   console.log('initialData', initialData);
-  return <HomeList initialData={initialData} query={query} />;
+  return <SearchList initialData={initialData} query={query} />;
 }
