@@ -24,7 +24,7 @@ export default function SearchInput({
       </div>
       <input
         ref={inputRef}
-        className="search-cancel:hidden block w-full py-3 pl-10 pr-7 text-sm rounded-full border border-[#2D3035] focus-visible:border-[#4ED1AD] focus-within:outline-0"
+        className="search-cancel:hidden block w-full py-3 pl-10 pr-10 text-sm rounded-full border border-[#2D3035] focus-visible:border-[#4ED1AD] focus-within:outline-0"
         name={name}
         type="search"
         autoComplete="off"
@@ -43,7 +43,7 @@ export default function SearchInput({
           resetButtonRef?.current?.style?.setProperty('display', 'none');
         }}
         type="button"
-        className="hidden text-white absolute end-3.5 inset-y-0"
+        className="hidden text-white absolute end-3 inset-y-0"
       >
         <XCircleIcon className="w-7 h-7 text-gray-500 dark:text-gray-400 " />
       </button>
