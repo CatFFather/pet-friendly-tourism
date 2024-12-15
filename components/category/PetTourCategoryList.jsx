@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, Suspense, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -36,40 +36,38 @@ export default function PetTourCategoryList({ categoryCodeList }) {
   }, [cat1, categoryListRef, markerRef]);
 
   return (
-    <Suspense>
-      <ul
-        ref={setCategoryListRef}
-        className="px-1.5 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden border-b"
-      >
-        <div className="flex items-center gap relative">
-          {categoryCodeList?.map((code) => {
-            return (
-              <Link
-                key={code?.code}
-                href={{ pathname, query: code?.code && { cat1: code?.code } }}
-                replace
+    <ul
+      ref={setCategoryListRef}
+      className="px-1.5 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden border-b"
+    >
+      <div className="flex items-center gap relative">
+        {categoryCodeList?.map((code) => {
+          return (
+            <Link
+              key={code?.code}
+              href={{ pathname, query: code?.code && { cat1: code?.code } }}
+              replace
+            >
+              <li
+                id={code?.code}
+                className="category__code px-2.5 pt-3.5 pb-2.5"
               >
-                <li
-                  id={code?.code}
-                  className="category__code px-2.5 pt-3.5 pb-2.5"
+                <span
+                  className={`text-sm text-[#2D3035] ${
+                    cat1 == code?.code ? 'font-bold' : 'font-normal'
+                  }`}
                 >
-                  <span
-                    className={`text-sm text-[#2D3035] ${
-                      cat1 == code?.code ? 'font-bold' : 'font-normal'
-                    }`}
-                  >
-                    {code?.name}
-                  </span>
-                </li>
-              </Link>
-            );
-          })}
-          <div
-            ref={setMarkerRef}
-            className="absolute bottom-0 h-1 bg-[#FF4081] transition-transform duration-300"
-          />
-        </div>
-      </ul>
-    </Suspense>
+                  {code?.name}
+                </span>
+              </li>
+            </Link>
+          );
+        })}
+        <div
+          ref={setMarkerRef}
+          className="absolute bottom-0 h-1 bg-[#FF4081] transition-transform duration-300"
+        />
+      </div>
+    </ul>
   );
 }
