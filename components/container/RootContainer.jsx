@@ -10,6 +10,7 @@ export default function RootContainer({ children }) {
       <div className="flex flex-col sticky top-0 h-screen max-w-[400px] py-10 gap-4 justify-between max-lg:hidden">
         <div className="flex flex-col gap-6">
           <Image
+            draggable={false}
             width={400}
             height={400}
             // fill

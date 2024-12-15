@@ -66,6 +66,7 @@ export default function HomeList({ initialData, query }) {
           >
             <div className="relative after:content-[''] after:pb-[90%] after:block">
               <Image
+                draggable={false}
                 fill
                 className="object-cover rounded-lg box-border border border-[#F3F6F6]"
                 src={
