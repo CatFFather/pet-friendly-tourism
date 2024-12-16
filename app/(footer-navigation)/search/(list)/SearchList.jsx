@@ -143,7 +143,7 @@ export default function SearchList({ initialData, query }) {
         </div>
       )}
 
-      {query?.keyword && searchList.length == 0 ? (
+      {query?.keyword && searchList?.length == 0 ? (
         // keyword가 있는데 검색 결과가 없을 때
         <Empty contents="검색 결과가 없습니다." />
       ) : (
@@ -157,6 +157,7 @@ export default function SearchList({ initialData, query }) {
               >
                 <div className="relative after:content-[''] after:pb-[90%] after:block">
                   <Image
+                    draggable={false}
                     fill
                     className="object-cover rounded-lg box-border border border-[#F3F6F6]"
                     src={
