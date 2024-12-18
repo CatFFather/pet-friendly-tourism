@@ -4,6 +4,8 @@ import Form from 'next/form';
 import { mobileWidth, mobileBreakpoint } from '@/styles/commonStyles';
 // COMPONENT
 import SearchInput from '@/components/input/SearchInput';
+
+const mobileWidthClass = `w-[${mobileWidth}px] max-${mobileBreakpoint}:w-full`;
 export default function RootContainer({ children }) {
   return (
     <div className="flex justify-center gap-5">
@@ -34,7 +36,7 @@ export default function RootContainer({ children }) {
       </div>
       {/* 우측화면 실제 모바일 화면 640px 기준으로 full */}
       <div
-        className={`min-h-screen relative border-x border-[#E1E1E1] border-solid box-content w-[${mobileWidth}px] max-${mobileBreakpoint}:w-full`}
+        className={`min-h-screen relative border-x border-[#E1E1E1] border-solid box-content w-[500px] max-md:w-full`}
       >
         {children}
       </div>
