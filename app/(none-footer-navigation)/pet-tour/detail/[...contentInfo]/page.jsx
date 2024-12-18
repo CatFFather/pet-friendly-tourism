@@ -1,5 +1,7 @@
 import DOMPurify from 'dompurify';
 import Image from 'next/image';
+import Link from 'next/link';
+
 // ICON
 import {
   PhoneIcon,
@@ -122,12 +124,15 @@ export default async function PetTourDetailPage({ params }) {
           {common?.title}
         </h1>
         <div className="flex flex-col gap-2">
-          <div className="flex items-center ">
-            <MapIcon className="h-5 w-5 text-[#4ED1AD] mr-1 flex-shrink-0 self-start" />{' '}
-            <span className="text-[#4E5354]">
-              {common?.addr1 || common?.addr2 || '-'}
-            </span>
-          </div>
+          <Link href="/map" scroll={false}>
+            <div className="flex items-center ">
+              <MapIcon className="h-5 w-5 text-[#4ED1AD] mr-1 flex-shrink-0 self-start" />{' '}
+              <span className="text-[#4E5354]">
+                {common?.addr1 || common?.addr2 || '-'}
+              </span>
+            </div>
+          </Link>
+
           <div className="flex items-center">
             <PhoneIcon className="h-5 w-5 text-[#4ED1AD] mr-1 flex-shrink-0 self-start" />{' '}
             <span className="text-[#4E5354]">{common?.tel || '-'}</span>

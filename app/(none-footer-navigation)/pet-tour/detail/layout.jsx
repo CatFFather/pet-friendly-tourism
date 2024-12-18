@@ -40,7 +40,9 @@ async function getDetailItems(contentTypeId, contentId) {
   return detailItems;
 }
 
-export default async function PetTourDetailLayout({ params, children }) {
+export default async function PetTourDetailLayout({ params, children, modal }) {
+  console.log('children', children);
+  console.log('@modal', modal);
   // const { contentInfo } = await params;
   // const contentTypeId = contentInfo?.[0];
   // const contentId = contentInfo?.[1];
@@ -60,5 +62,10 @@ export default async function PetTourDetailLayout({ params, children }) {
   // console.log('childrenWithTabs', childrenWithTabs);
   const tilte = '타이틀 고민중';
 
-  return <TopBackButtonLayout tilte={tilte}>{children}</TopBackButtonLayout>;
+  return (
+    <TopBackButtonLayout tilte={tilte}>
+      {children}
+      {modal}
+    </TopBackButtonLayout>
+  );
 }
