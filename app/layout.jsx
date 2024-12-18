@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+import Script from 'next/script';
 import './globals.css';
 // COMPONENT
 import RootContainer from '@/components/container/RootContainer';
@@ -22,6 +23,8 @@ export const metadata = {
     '반려동물 동반여행 가능한 관광지, 문화시설, 축제공연행사, 숙박, 음식점, 레포츠, 쇼핑의 관광정보를 제공하는 홈페이지',
 };
 
+const KAKAO_SDK_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`;
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -29,6 +32,14 @@ export default function RootLayout({ children }) {
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         className="antialiased"
       >
+        {/* <script
+          type="text/javascript"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer`}
+        ></script> */}
+        {/* <Script src="https://developers.kakao.com/sdk/js/kakao.js" async /> */}
+
+        {/* <Script strategy="beforeInteractive" src={KAKAO_SDK_URL} /> */}
+
         <AxiosProvider>
           <GlobalStoreProvider>
             <RootContainer>{children}</RootContainer>
