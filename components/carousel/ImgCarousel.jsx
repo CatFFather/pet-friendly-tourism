@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 // ICON
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
+// UTIL
+import { getIsMobile } from '@/utils/device';
 
 export default function ImgCarousel({ images }) {
   // 0번 index에는 마지막 아이템이 하나 더 들어있고 마지막 index에는 첫 번째 아이템이 하나 더 넣어줌 --> 무한캐러셀 구현을 위함
@@ -64,12 +66,6 @@ export default function ImgCarousel({ images }) {
     imgWrapRef?.current?.style?.setProperty('transition-duration', `500ms`);
     setCurrentIndex(currentIndex + 1);
   }
-  function onTouchStart(e) {
-    console.log('onTouchStart!!!!!!!!!!', e);
-  }
-  function onTouchEnd(e) {
-    console.log('onTouchEnd@@@@@@@@@@@@@@@@@', e);
-  }
   // 마우스 클릭 했을 때
   function onMouseDown(e) {
     if (images?.length <= 1) return;
@@ -116,15 +112,65 @@ export default function ImgCarousel({ images }) {
     if (type == 'prev') return goToPrevious(); // 이전 사진으로 이동
     if (type == 'next') return goToNext(); // 다음 사진으로 이동
   }
+  // 모바일 터치 이벤트
+  function onTouchStart(e) {
+    if (images?.length <= 1) return;
+    isDragging.current = true;
+    startPosition.current = e?.targetTouches[0]?.pageX;
+    // imgWrapRef에 onMouseMove, onMouseUp를 직접 선언하면 마우스 이벤트가 imgWrapRef의 영역 밖으로 이동했을 때 onMouseUp 이벤트가 발생하지 않게됨
+    // --> 전역 이벤트 리스너 추가하여 이벤트 추적
+    // 전역 이벤트 리스너 추가
+    window.addEventListener('touchmove', onTouchMove);
+    window.addEventListener('touchend', onTouchEnd);
+  }
+  function onTouchMove(e) {
+    if (!isDragging.current) return;
+    const currentPosition = e?.targetTouches[0]?.pageX;
+    const difference = startPosition.current - currentPosition;
+    const absolute = Math.abs(difference);
+    const operator = difference > 0 ? '-' : '+'; // 차이가 0보다 크면 다음 작으면 이전 --> operator는 -일 때 다음 사진임
+    const movingWidth = `calc(-${
+      currentIndex * 100
+    }% ${operator} ${absolute}px)`;
+    if (currentIndex == 0 || currentIndex == totalImages?.length - 1) return; // 양쪽 끝 가짜 이미지 일 때는 작동 하지 않게함 --> 이때 움직이게 되면 빈 화면이 노출 됨
+    imgWrapRef.current?.style?.setProperty('transition-duration', `0ms`); // duration을 0초로 초기화 후 이동
+    imgWrapRef.current?.style?.setProperty(
+      'transform',
+      `translateX(${movingWidth})`,
+    );
+  }
+  function onTouchEnd(e) {
+    isDragging.current = false;
+    const currentPosition = e?.changedTouches[0]?.pageX;
+    const difference = startPosition.current - currentPosition;
+    const absolute = Math.abs(difference);
+    const type = difference > 0 ? 'next' : 'prev'; // 차이가 0보다 크면 다음 작으면 이전
+    // 전역 이벤트 리스너 제거
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+    // 100만큼 이동하지 못하면 원래 위치로 이동
+    if (absolute < 100) {
+      imgWrapRef.current.style.setProperty('transition-duration', `500ms`);
+      return movingImgWrap();
+    }
+    if (type == 'prev') return goToPrevious(); // 이전 사진으로 이동
+    if (type == 'next') return goToNext(); // 다음 사진으로 이동
+  }
+
+  function getEvent() {
+    if (getIsMobile()) {
+      return { onTouchStart };
+    } else {
+      return { onMouseDown };
+    }
+  }
 
   return (
     <div className="relative">
       <div className="overflow-x-hidden rounded-lg">
         <div
+          {...getEvent()}
           ref={imgWrapRef}
-          // onTouchStart
-          // onTouchEnd
-          onMouseDown={onMouseDown}
           className="flex transition-transform translate-x-[-100%]"
         >
           {totalImages?.map((image, index) => {
