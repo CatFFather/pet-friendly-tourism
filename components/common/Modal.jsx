@@ -15,7 +15,7 @@ export default function Modal({
   full, // 전체 화면
   bottomSlide, // 하단에서 올라오는 에니메이션 적용
 }) {
-  const innerWrapClass = `bg-white p-6 relative max-w-lg w-[90%] h-[initial] ${
+  const innerWrapClass = `bg-white p-6 relative w-[90%] h-[initial] ${
     full ? '!w-full !h-full' : 'rounded-lg w-[90%] h-[initial]'
   }`;
   const modalAnimationClass = `${
