@@ -76,7 +76,7 @@ export default function Modal({
         </button>
         <div className="flex flex-col h-full ">
           <h2 className="text-xl font-bold p-4">{title}</h2>
-          <div className="flex-grow pb-10">{children}</div>
+          <div className="flex-grow">{children}</div>
         </div>
       </div>
     </div>
