@@ -11,7 +11,7 @@ const mobileWidthClass = `max-w-[${mobileWidth}px] max-${mobileBreakpoint}:max-w
 export default function Modal({
   children,
   title, // 제목
-  innerWrapStyle, // 내부 스타일
+  innerWrapStyle = '', // 내부 스타일
   full, // 전체 화면
   bottomSlide, // 하단에서 올라오는 에니메이션 적용
 }) {
