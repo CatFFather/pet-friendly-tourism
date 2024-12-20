@@ -44,7 +44,6 @@ async function getDetailItems(contentTypeId, contentId) {
       }),
     ]);
   const intro = detailIntro?.response?.body?.items?.item?.[0];
-  console.log('intro', intro);
   const newIntroData = introCategorizedFields?.[contentTypeId].map((column) => {
     const value = intro[column?.key];
     return { ...column, value };
@@ -109,11 +108,11 @@ export default async function PetTourDetailPage({ params }) {
       url: common?.firstimage || null,
       imgName: common?.title,
     };
-    const images =
-      detailItems?.images?.map((image) => {
+    const imagesData =
+      images?.map((image) => {
         return { url: image?.originimgurl, imgName: image?.imgname };
       }) || [];
-    return [firstimageImg, ...images];
+    return [firstimageImg, ...imagesData];
   }
 
   return (
@@ -124,7 +123,17 @@ export default async function PetTourDetailPage({ params }) {
           {common?.title}
         </h1>
         <div className="flex flex-col gap-2">
-          <Link href="/map" scroll={false}>
+          <Link
+            href={{
+              pathname: '/pet-tour/detail/map',
+              query: {
+                mapx: common?.mapx,
+                mapy: common?.mapy,
+                addr: common?.addr1 || common?.addr2,
+              },
+            }}
+            scroll={false}
+          >
             <div className="flex items-center ">
               <MapIcon className="h-5 w-5 text-[#4ED1AD] mr-1 flex-shrink-0 self-start" />{' '}
               <span className="text-[#4E5354]">
