@@ -41,8 +41,6 @@ async function getDetailItems(contentTypeId, contentId) {
 }
 
 export default async function PetTourDetailLayout({ params, children, modal }) {
-  console.log('children', children);
-  console.log('@modal', modal);
   // const { contentInfo } = await params;
   // const contentTypeId = contentInfo?.[0];
   // const contentId = contentInfo?.[1];
