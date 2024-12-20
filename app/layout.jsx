@@ -32,14 +32,6 @@ export default function RootLayout({ children }) {
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         className="antialiased"
       >
-        {/* <script
-          type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer`}
-        ></script> */}
-        {/* <Script src="https://developers.kakao.com/sdk/js/kakao.js" async /> */}
-
-        {/* <Script strategy="beforeInteractive" src={KAKAO_SDK_URL} /> */}
-
         <AxiosProvider>
           <GlobalStoreProvider>
             <RootContainer>{children}</RootContainer>

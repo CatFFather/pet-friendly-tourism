@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-// import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
+import { Map } from 'react-kakao-maps-sdk';
 import Modal from '@/components/common/Modal';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 
-export default function DetailMappage({ params }) {
+export default function DetailMappage({}) {
   const [loading, error] = useKakaoLoader();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function DetailMappage({ params }) {
 
   return (
     <Modal title="지도" full bottomSlide>
-      <div className="w-full h-60 bg-gray-300 flex items-center justify-center">
+      <div className="w-full h-full">
         {loading ? (
           '로딩중 '
         ) : error ? (
@@ -29,7 +29,7 @@ export default function DetailMappage({ params }) {
             }}
             style={{
               width: '100%',
-              height: '350px',
+              height: '100%',
             }}
             level={3}
           />
