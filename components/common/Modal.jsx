@@ -15,7 +15,7 @@ export default function Modal({
   full, // 전체 화면
   bottomSlide, // 하단에서 올라오는 에니메이션 적용
 }) {
-  const innerWrapClass = `bg-white p-6 relative w-[90%] h-[initial] ${
+  const innerWrapClass = `bg-white relative w-[90%] h-[initial] ${
     full ? '!w-full !h-full' : 'rounded-lg w-[90%] h-[initial]'
   }`;
   const modalAnimationClass = `${
@@ -72,11 +72,11 @@ export default function Modal({
           onClick={handleClose}
           className="hover:text-gray-700 p-3 absolute top-0 right-0"
         >
-          <XMarkIcon className="w-6 h-6 text-gray-500 dark:text-gray-400 " />
+          <XMarkIcon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
         </button>
-        <div className="flex flex-col gap-2">
-          <h2 className="text-xl font-bold">{title}</h2>
-          <div>{children}</div>
+        <div className="flex flex-col h-full ">
+          <h2 className="text-xl font-bold p-4">{title}</h2>
+          <div className="flex-grow pb-10">{children}</div>
         </div>
       </div>
     </div>
