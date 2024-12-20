@@ -129,6 +129,7 @@ export default async function PetTourDetailPage({ params }) {
               query: {
                 mapx: common?.mapx,
                 mapy: common?.mapy,
+                title: common?.title,
                 addr: common?.addr1 || common?.addr2,
               },
             }}
