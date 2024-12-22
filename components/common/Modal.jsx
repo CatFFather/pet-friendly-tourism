@@ -68,14 +68,18 @@ export default function Modal({
       className={`fixed inset-y-0 flex items-center justify-center bg-black bg-opacity-50 z-50 w-full max-w-[500px] max-md:max-w-full transition-all duration-300 ${modalAnimationClass}`}
     >
       <div ref={innerWrapRef} className={`${innerWrapClass} ${innerWrapStyle}`}>
-        <button
-          onClick={handleClose}
-          className="hover:text-gray-700 p-3 absolute top-0 right-0"
-        >
-          <XMarkIcon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
-        </button>
         <div className="flex flex-col h-full ">
-          <h2 className="text-xl font-bold p-4">{title}</h2>
+          <div className="flex justify-between">
+            <h2 className="text-xl font-bold p-4">{title}</h2>
+            <button
+              onClick={handleClose}
+              className={`hover:text-gray-700 p-3 ${
+                full ? '' : 'absolute top-0 right-0'
+              }`}
+            >
+              <XMarkIcon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+            </button>
+          </div>
           <div className="flex-grow">{children}</div>
         </div>
       </div>
