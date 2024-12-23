@@ -224,20 +224,22 @@ export default async function PetTourDetailPage({ params }) {
             {info?.map((item) => {
               return (
                 <div className="flex flex-col rounded-lg p-3 bg-[#FFFFFF] -mx-1 gap-3">
-                  <div className="flex gap-x-3">
-                    <div className="basis-2/4">
+                  <div>
+                    <div className="float-left w-1/2 mr-3">
                       <ImgCarousel images={getRoomsImages(item)} size="small" />
                     </div>
-                    <div className="flex flex-col gap-2 basis-2/4">
-                      <h4 className="text-base font-bold text-[#0E0E0E]">
+                    <div>
+                      <h4 className="text-base font-bold text-[#0E0E0E] mb-2">
                         {item?.roomtitle}
                       </h4>
-                      <span>
-                        기준 {item?.roombasecount}인 / 최대 {item?.roommaxcount}
-                        인
-                      </span>
+                      <div className="mb-2">
+                        <span>
+                          기준 {item?.roombasecount}인 / 최대{' '}
+                          {item?.roommaxcount}인
+                        </span>
+                      </div>
+                      <p>{item?.roomintro}</p>
                       {/* TODO 평수(roomsize1), 객실수(roomcount)도 있음 넣을 지 고민  */}
-                      <span>{item?.roomintro}</span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-3">
