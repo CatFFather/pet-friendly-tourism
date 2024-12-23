@@ -1,14 +1,8 @@
 import DOMPurify from 'dompurify';
-import Image from 'next/image';
 import Link from 'next/link';
 
 // ICON
-import {
-  PhoneIcon,
-  MapIcon,
-  ChevronRightIcon,
-  ChevronLeftIcon,
-} from '@heroicons/react/24/outline';
+import { PhoneIcon, MapIcon } from '@heroicons/react/24/outline';
 // SERVICE
 import KorPetTourService from '@/service/KorPetTourService ';
 // UTIL
@@ -103,7 +97,7 @@ export default async function PetTourDetailPage({ params }) {
   }
 
   // 상단 이미지 모음
-  function getImages() {
+  function getMainImages() {
     const firstimageImg = {
       url: common?.firstimage || null,
       imgName: common?.title,
@@ -115,9 +109,21 @@ export default async function PetTourDetailPage({ params }) {
     return [firstimageImg, ...imagesData];
   }
 
+  // 객실 이미지 모음
+  function getRoomsImages(item) {
+    const roomimgs = [];
+    // roomimg는 1부터 5까지 있음
+    for (let num = 1; num < 6; num++) {
+      const imgUrl = `roomimg${num}`;
+      const imgName = `roomimg${num}alt`;
+      item?.[imgUrl] &&
+        roomimgs.push({ url: item?.[imgUrl], imgName: item?.[imgName] });
+    }
+    return roomimgs;
+  }
   return (
     <div>
-      <ImgCarousel images={getImages()} />
+      <ImgCarousel images={getMainImages()} />
       <div className="px-4 py-5 text-sm">
         <h1 className="text-xl font-bold text-[#0E0E0E] mb-4">
           {common?.title}
@@ -219,16 +225,10 @@ export default async function PetTourDetailPage({ params }) {
               return (
                 <div className="flex flex-col rounded-lg p-3 bg-[#FFFFFF] -mx-1 gap-3">
                   <div className="flex gap-x-3">
-                    <div className="relative after:content-[''] after:pb-[90%] after:block basis-2/4 flex-shrink-0">
-                      <Image
-                        fill
-                        className="object-cover rounded-lg box-border border border-[#F3F6F6]"
-                        src={item?.roomimg1 || '/images/DefaultImage.webp'}
-                        alt={item?.roomimg1alt || '사진 없음'}
-                        sizes="100%"
-                      />
+                    <div className="basis-2/4">
+                      <ImgCarousel images={getRoomsImages(item)} size="small" />
                     </div>
-                    <div className="flex flex-col flex-grow gap-2">
+                    <div className="flex flex-col gap-2 basis-2/4">
                       <h4 className="text-base font-bold text-[#0E0E0E]">
                         {item?.roomtitle}
                       </h4>
