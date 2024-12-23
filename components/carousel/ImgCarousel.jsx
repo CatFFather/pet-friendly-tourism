@@ -6,7 +6,11 @@ import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 // UTIL
 import { getIsMobile } from '@/utils/device';
 
-export default function ImgCarousel({ images }) {
+export default function ImgCarousel({ images, size }) {
+  const arrowIconClass = `${
+    size == 'small' ? 'h-7 w-7' : 'h-10 w-10'
+  } text-[#ffffff]`;
+
   // 0번 index에는 마지막 아이템이 하나 더 들어있고 마지막 index에는 첫 번째 아이템이 하나 더 넣어줌 --> 무한캐러셀 구현을 위함
   const totalImages = [
     images?.[images?.length - 1],
@@ -104,8 +108,8 @@ export default function ImgCarousel({ images }) {
     // 전역 이벤트 리스너 제거
     window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('mouseup', onMouseUp);
-    // 100만큼 이동하지 못하면 원래 위치로 이동
-    if (absolute < 100) {
+    if (absolute < (size == 'small' ? 60 : 100)) {
+      // small일 때 60만큼 이동하지 못하면 원래 위치로 이동 (기본은 100)
       imgWrapRef.current.style.setProperty('transition-duration', `500ms`);
       return movingImgWrap();
     }
@@ -148,8 +152,8 @@ export default function ImgCarousel({ images }) {
     // 전역 이벤트 리스너 제거
     window.removeEventListener('touchmove', onTouchMove);
     window.removeEventListener('touchend', onTouchEnd);
-    // 100만큼 이동하지 못하면 원래 위치로 이동
-    if (absolute < 100) {
+    if (absolute < (size == 'small' ? 60 : 100)) {
+      // small일 때 60만큼 이동하지 못하면 원래 위치로 이동 (기본은 100)
       imgWrapRef.current.style.setProperty('transition-duration', `500ms`);
       return movingImgWrap();
     }
@@ -198,7 +202,7 @@ export default function ImgCarousel({ images }) {
           onClick={goToPrevious}
           disabled={images?.length == 1}
         >
-          <ChevronLeftIcon className="h-10 w-10 text-[#ffffff]" />
+          <ChevronLeftIcon className={arrowIconClass} />
         </button>
       )}
       {images?.length > 1 && (
@@ -207,7 +211,7 @@ export default function ImgCarousel({ images }) {
           onClick={goToNext}
           disabled={images?.length == 1}
         >
-          <ChevronRightIcon className="h-10 w-10 text-[#ffffff]" />
+          <ChevronRightIcon className={arrowIconClass} />
         </button>
       )}
 
