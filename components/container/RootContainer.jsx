@@ -8,9 +8,9 @@ import SearchInput from '@/components/input/SearchInput';
 const mobileWidthClass = `w-[${mobileWidth}px] max-${mobileBreakpoint}:w-full`;
 export default function RootContainer({ children }) {
   return (
-    <div className="flex justify-center gap-5">
+    <main className="flex justify-center gap-5">
       {/* 좌측화면 1024px까지만 노출 */}
-      <div className="flex flex-col sticky top-0 h-screen max-w-[400px] py-10 gap-4 justify-between max-lg:hidden">
+      <section className="flex flex-col sticky top-0 h-screen max-w-[400px] py-10 gap-4 justify-between max-lg:hidden">
         <div className="flex flex-col gap-6">
           <Image
             draggable={false}
@@ -33,13 +33,13 @@ export default function RootContainer({ children }) {
           </div>
         </div>
         <div>하단 설명</div>
-      </div>
+      </section>
       {/* 우측화면 실제 모바일 화면 640px 기준으로 full */}
-      <div
+      <section
         className={`relative min-h-screen w-[500px] max-md:w-full border-x border-[#E1E1E1] border-solid`}
       >
         {children}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

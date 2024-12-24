@@ -5,7 +5,7 @@ import FooterNavigation from '@/components/navigation/FooterNavigation';
 export default function FooterNavigationLayout({ children }) {
   return (
     <>
-      <main>{children}</main>
+      {children}
       <FooterNavigation />
     </>
   );

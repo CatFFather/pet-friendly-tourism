@@ -11,19 +11,21 @@ const navItems = [
 // 하단 버튼
 export default function FooterNavigation({}) {
   return (
-    <ul className="flex justify-between bg-[#FFFFFF] h-14 items-center px-4 sticky bottom-0 border-t">
-      {navItems.map((nav) => {
-        return (
-          <li key={nav.href}>
-            <Link
-              href={nav.href}
-              className="flex flex-col items-center text-xs"
-            >
-              <NavigationIcon nav={nav} href={nav.href} />
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+    <nav className="sticky bottom-0 border-t">
+      <ul className="flex justify-between bg-[#FFFFFF] h-14 items-center px-4 ">
+        {navItems.map((nav) => {
+          return (
+            <li key={nav.href}>
+              <Link
+                href={nav.href}
+                className="flex flex-col items-center text-xs"
+              >
+                <NavigationIcon nav={nav} href={nav.href} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
