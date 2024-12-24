@@ -36,7 +36,7 @@ export default function RootContainer({ children }) {
       </div>
       {/* 우측화면 실제 모바일 화면 640px 기준으로 full */}
       <div
-        className={`min-h-screen relative border-x border-[#E1E1E1] border-solid box-content w-[500px] max-md:w-full`}
+        className={`relative min-h-screen w-[500px] max-md:w-full border-x border-[#E1E1E1] border-solid`}
       >
         {children}
       </div>
