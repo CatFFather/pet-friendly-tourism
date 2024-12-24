@@ -11,8 +11,8 @@ const navItems = [
 // 하단 버튼
 export default function FooterNavigation({}) {
   return (
-    <nav className="sticky bottom-0 border-t">
-      <ul className="flex justify-between bg-[#FFFFFF] h-14 items-center px-4 ">
+    <nav className="sticky bottom-0 border-t border-[#E1E1E1] bg-[#FFFFFF]">
+      <ul className="flex justify-between  h-14 items-center px-4">
         {navItems.map((nav) => {
           return (
             <li key={nav.href}>
