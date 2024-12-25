@@ -80,7 +80,6 @@ export default function PetTourCategoryList({ categoryCodeList }) {
 
   return (
     <ul
-      onClick={(e) => console.log('e', e)}
       ref={setCategoryListRef}
       onMouseDown={onMouseDown}
       className="px-1.5 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden border-b flex items-center gap relative"
@@ -88,7 +87,6 @@ export default function PetTourCategoryList({ categoryCodeList }) {
       {categoryCodeList?.map((code) => {
         return (
           <Link
-            onClick={(e) => console.log('Link e', e)}
             draggable={false}
             key={code?.code}
             href={{ pathname, query: code?.code && { cat1: code?.code } }}
