@@ -15,7 +15,10 @@ import LocalStorage from '@/utils/localStorage';
 
 // 검색 리스트
 export default function SearchList({ initialData, query }) {
-  const listLoadingRef = useObserver({ callback: setNextPage });
+  const listLoadingRef = useObserver({
+    callback: setNextPage,
+    dependency: { initialData, query },
+  });
   const [searchList, setSearchList] = useState(null); // 검색 리스트
   const [pagination, setPagination] = useState(null); // 페이징 정보
   const [listLoading, setListLoading] = useState(false); // 리스트 로딩

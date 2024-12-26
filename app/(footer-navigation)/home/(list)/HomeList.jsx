@@ -11,7 +11,10 @@ import useObserver from '@/hooks/useObserver';
 
 // 홈 리스트
 export default function HomeList({ initialData, query }) {
-  const listLoadingRef = useObserver({ callback: setNextPage });
+  const listLoadingRef = useObserver({
+    callback: setNextPage,
+    dependency: { initialData, query },
+  });
   const [areaBasedList, setAreaBasedList] = useState(null); // 지역기반 관광정보 리스트
   const [pagination, setPagination] = useState(null); // 페이징 정보
   const [listLoading, setListLoading] = useState(false); // 리스트 로딩
