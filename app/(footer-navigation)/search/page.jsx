@@ -13,7 +13,6 @@ async function getInitialData(query) {
       arrange: 'R',
       ...query,
     });
-    console.log('data', data);
     return data;
   } catch (e) {
     console.log('e', e);
@@ -22,9 +21,7 @@ async function getInitialData(query) {
 
 export default async function Search({ searchParams }) {
   const query = await searchParams;
-  console.log('query', query);
 
   const initialData = query?.keyword ? await getInitialData(query) : []; // 서버에서 데이터 가져오기
-  console.log('initialData', initialData);
   return <SearchList initialData={initialData} query={query} />;
 }
