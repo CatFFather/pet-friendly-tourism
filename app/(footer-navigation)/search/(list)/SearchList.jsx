@@ -125,7 +125,10 @@ export default function SearchList({ initialData, query }) {
                   >
                     <Link
                       className="flex-grow"
-                      href={`/search?keyword=${keyword?.value}`}
+                      href={{
+                        pathname: '/search',
+                        query: { keyword: keyword?.value },
+                      }}
                     >
                       <span className="text-[#2D3035] text-sm line-clamp-2">
                         {keyword?.value}
