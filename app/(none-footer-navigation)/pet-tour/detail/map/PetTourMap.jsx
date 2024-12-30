@@ -58,7 +58,7 @@ export default function DetailMappage({ params }) {
           >
             <MapMarker position={{ lat: mapy, lng: mapx }} />
             <ZoomControl position="RIGHT" />
-            <div className="fixed bottom-0 z-50 w-full">
+            <div className="absolute bottom-0 z-50 w-full">
               <div className="flex justify-end p-4">
                 <button
                   className=" bg-shadow-color rounded-full p-2.5"
