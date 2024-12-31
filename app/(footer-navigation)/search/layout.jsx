@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 // COMPONENT
 import SearchInputLayout from '@/components/layout/SearchInputLayout';
 
-export default function SearchLayout({ children }) {
+export default function SearchLayout({ children, modal }) {
   return (
     <div className="relative">
       <div className="sticky top-0 bg-[#FFFFFF] z-50">
@@ -12,6 +12,7 @@ export default function SearchLayout({ children }) {
         </Suspense>
       </div>
       {children}
+      {modal}
     </div>
   );
 }

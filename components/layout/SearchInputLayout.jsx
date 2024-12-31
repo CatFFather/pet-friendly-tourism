@@ -17,19 +17,9 @@ export default function SearchInputLayout({}) {
           <div className="flex-grow">
             <SearchInput name="keyword" defaultValue={keyword} />
           </div>
-          <Link href={{ pathname: '/pet-tour/detail/map' }} scroll={false}>
+          <Link href={{ pathname: '/pet-tour/search-map' }} scroll={false}>
             <MapPinIcon className="w-7 h-7 text-gray-500 dark:text-gray-400 " />
           </Link>
-          {/* 
-          href={{
-              pathname: '/pet-tour/detail/map',
-              query: {
-                mapx: common?.mapx,
-                mapy: common?.mapy,
-                title: common?.title,
-                addr: common?.addr1 || common?.addr2,
-              },
-            }} */}
         </div>
       </Form>
     </div>
