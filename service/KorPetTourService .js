@@ -146,6 +146,26 @@ export default {
     return axios(requestOptions);
   },
 
+  /**
+   * 위치기반 관광정보조회
+   * 반려동물 동반여행지의 주변 좌표를 기반으로 관광정보 목록을 조회하는 기능입니다. 파라미터에 따라 제목순, 수정일순(최신순), 등록일순, 거리순 정렬검색을 제공합니다.
+   * @param {*} params
+   * @returns
+   */
+  getLocationBasedList: (params) => {
+    const requestOptions = {
+      method: 'GET',
+      url: `/locationBasedList?${qs.stringify(params)}`,
+    };
+    return axios(requestOptions);
+  },
+  // getLocationBasedList: (params) => {
+  //   return request(
+  //     `/locationBasedList?${qs.stringify({ ...defaultParams, ...params })}`,
+  //     { method: 'GET' },
+  //   );
+  // },
+
   // 로컬 테스트 api 추가
   getDetailData: (params) => {
     const requestOptions = {
