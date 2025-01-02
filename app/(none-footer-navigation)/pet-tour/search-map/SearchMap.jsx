@@ -157,7 +157,7 @@ export default function SearchMapPage({ params }) {
                 <div className="relative bg-[#ffffff] flex flex-col gap-1 p-4 shadow-[0px_0px_0.4rem_0px_rgba(0,0,0,0.3)]">
                   <button
                     onClick={() => setSelectedMarkerInfo(null)}
-                    className="hover:text-gray-700 p-2 absolute top-0 right-0"
+                    className="hover:text-gray-700 p-2 absolute -top-1 right-0"
                   >
                     <XMarkIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                   </button>
@@ -182,6 +182,7 @@ export default function SearchMapPage({ params }) {
 
                     <div className="basis-2/4 flex flex-col">
                       <Link
+                        className="mt-0.5"
                         href={`/pet-tour/detail/${selectedMarkerInfo?.contenttypeid}/${selectedMarkerInfo?.contentid}`}
                       >
                         <span className="font-bold text-[#1A1A1A] text-base">
