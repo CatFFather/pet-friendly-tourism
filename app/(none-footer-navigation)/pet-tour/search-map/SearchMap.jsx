@@ -3,7 +3,10 @@
 import _ from 'lodash';
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
+// ICON
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { HomeIcon } from '@heroicons/react/24/outline';
 // HOOK
 import useKakaoLoader from '@/hooks/useKakaoLoader';
@@ -37,7 +40,7 @@ export default function SearchMapPage({ params }) {
   }, [isLoading]);
 
   // 주소 복사
-  async function copyToClipboard() {
+  async function copyToClipboard(addr) {
     try {
       await navigator.clipboard.writeText(addr);
       alert('클립보드에 복사되었습니다.');
@@ -150,26 +153,59 @@ export default function SearchMapPage({ params }) {
                   <HomeIcon className="h-7 w-7 text-[#ffffff]" />
                 </button>
               </div>
-              {/* TODO 사진을 어떤 위치로 노출 시켜줄지 고민 */}
               {selectedMarkerInfo && (
-                <div className="bg-[#ffffff] flex flex-col gap-1 p-4 shadow-[0px_0px_0.4rem_0px_rgba(0,0,0,0.3)]">
-                  <Link
-                    href={`/pet-tour/detail/${selectedMarkerInfo?.contenttypeid}/${selectedMarkerInfo?.contentid}`}
+                <div className="relative bg-[#ffffff] flex flex-col gap-1 p-4 shadow-[0px_0px_0.4rem_0px_rgba(0,0,0,0.3)]">
+                  <button
+                    onClick={() => setSelectedMarkerInfo(null)}
+                    className="hover:text-gray-700 p-2 absolute top-0 right-0"
                   >
-                    <span className="font-bold text-[#1A1A1A] text-base">
-                      {selectedMarkerInfo?.title}
-                    </span>
-                  </Link>
-                  <div className="text-xs flex justify-between">
-                    <span className="text-[#6D6D6D]">
-                      {selectedMarkerInfo?.addr1 || selectedMarkerInfo?.addr2}
-                    </span>
-                    <button
-                      className="text-[#0152CC]"
-                      onClick={copyToClipboard}
+                    <XMarkIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                  </button>
+                  <div className="flex gap-2">
+                    <Link
+                      className="basis-2/4 flex-grow flex-shrink relative after:content-[''] after:pb-[90%] after:block"
+                      href={`/pet-tour/detail/${selectedMarkerInfo?.contenttypeid}/${selectedMarkerInfo?.contentid}`}
                     >
-                      주소 복사
-                    </button>
+                      <Image
+                        draggable={false}
+                        fill
+                        className="object-cover rounded-lg box-border border border-[#F3F6F6]"
+                        src={
+                          selectedMarkerInfo?.firstimage ||
+                          selectedMarkerInfo?.firstimage2 ||
+                          '/images/DefaultImage.webp'
+                        }
+                        sizes="100%" // sizes를 지정해달라고 해서 임시로 100%로 해놨는데 이거 무슨값을 넣어도 바뀌지않는데 왜그럴까?
+                        alt={selectedMarkerInfo?.title}
+                      />
+                    </Link>
+
+                    <div className="basis-2/4 flex flex-col">
+                      <Link
+                        href={`/pet-tour/detail/${selectedMarkerInfo?.contenttypeid}/${selectedMarkerInfo?.contentid}`}
+                      >
+                        <span className="font-bold text-[#1A1A1A] text-base">
+                          {selectedMarkerInfo?.title}
+                        </span>
+                      </Link>
+                      <div className="text-xs flex-1 flex flex-col justify-between">
+                        <span className="text-[#6D6D6D]">
+                          {selectedMarkerInfo?.addr1 ||
+                            selectedMarkerInfo?.addr2}
+                        </span>
+                        <button
+                          className="text-[#0152CC] self-end"
+                          onClick={() =>
+                            copyToClipboard(
+                              selectedMarkerInfo?.addr1 ||
+                                selectedMarkerInfo?.addr2,
+                            )
+                          }
+                        >
+                          주소 복사
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
