@@ -30,9 +30,6 @@ export default function SearchMapPage({ params }) {
   const [selectedMarkerInfo, setSelectedMarkerInfo] = useState(null); // 선택된 위치기반 관광정보 데이터
   const selectedMarkerInfoWrapRef = useRef(null);
   const bottomWrapRef = useRef(null);
-  useEffect(() => {
-    console.log('listLoading 변화 감지@@@@@@', listLoading);
-  }, [listLoading]);
 
   // 처음 내위치 저장
   useEffect(() => {
