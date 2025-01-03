@@ -186,6 +186,7 @@ export default function SearchMapPage({ params }) {
               <button
                 className=" bg-shadow-color rounded-full p-2.5"
                 onClick={() => {
+                  onCloseSelectedMarkerInfo();
                   setState({
                     center: {
                       lat: currentLocation?.latitude,
