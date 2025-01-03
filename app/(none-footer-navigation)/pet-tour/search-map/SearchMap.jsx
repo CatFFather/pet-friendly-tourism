@@ -8,6 +8,8 @@ import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 // ICON
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { HomeIcon } from '@heroicons/react/24/outline';
+// COMPONENT
+import LoadingDots from '@/components/progress/LoadingDots';
 // HOOK
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import useGeoLocation from '@/hooks/useGeoLocation';
@@ -32,13 +34,26 @@ export default function SearchMapPage({ params }) {
   // 처음 내위치 저장
   useEffect(() => {
     if (!isLoading) {
+      const mapX = currentLocation?.longitude; // 경도
+      const mapY = currentLocation?.latitude; // 위도
       setState({
         center: {
-          lat: currentLocation?.latitude, // 위도
-          lng: currentLocation?.longitude, // 경도
+          lng: mapX, // 경도
+          lat: mapY, // 위도
         },
         isPanto: false, // 지도 위치 변경시 panto를 이용할지에 대해서 정의
       });
+      const scale = 1;
+      const currentMap = document.getElementById('search_map_page');
+      const radius = currentMap?.offsetWidth / scale / 2;
+      if (!mapX || !mapY || !radius) return;
+      const params = {
+        mapX,
+        mapY,
+        radius,
+        numOfRows: 100,
+      };
+      getLocationBasedList(params);
     }
   }, [isLoading]);
 
@@ -54,6 +69,7 @@ export default function SearchMapPage({ params }) {
 
   // 지도 가운대 변경 시 이벤트
   function onCenterChanged(map) {
+    setListLoading(true);
     const level = map?.getLevel();
     const center = map?.getCenter();
     const mapX = center.getLng(); // 경도
@@ -83,7 +99,7 @@ export default function SearchMapPage({ params }) {
   }
 
   const debouncedFetchData = useCallback(
-    _.debounce(getLocationBasedList, 1000),
+    _.debounce(getLocationBasedList, 500),
     [],
   );
 
@@ -100,6 +116,11 @@ export default function SearchMapPage({ params }) {
 
   // 지도에 표기된 마커 클릭
   function onClickMapMarker(info) {
+    // // 마커 클릭 해당 마커 기준 중앙으로 이동 TODO 사용 해야 할 지 생각중--> api 호출을 많이하게 됨
+    // setState({
+    //   center: { lat: info?.mapy, lng: info?.mapx },
+    //   isPanto: true,
+    // });
     bottomWrapRef?.current?.style?.setProperty('transform', 'translateY(0)');
     selectedMarkerInfoWrapRef?.current?.style?.setProperty('opacity', 1);
     setSelectedMarkerInfo(info);
@@ -122,16 +143,9 @@ export default function SearchMapPage({ params }) {
         '에러발생: Kakao Maps 로드 실패'
       ) : (
         <div className="relative w-full h-full overflow-hidden">
-          {/* <div className="absolute top-0 w-full z-50">
-            {listLoading == false && (
-              <div class="flex space-x-2 justify-center items-center dark:invert">
-                <span class="sr-only">Loading...</span>
-                <div class="h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                <div class="h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                <div class="h-8 w-8 bg-black rounded-full animate-bounce"></div>
-              </div>
-            )}
-          </div> */}
+          <div className="absolute top-6 w-full z-50">
+            {listLoading && <LoadingDots />}
+          </div>
           <Map
             id="search_map_page"
             center={state.center}
